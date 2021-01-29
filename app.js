@@ -7,7 +7,7 @@ var session = require("express-session");
 var FileStore = require("session-file-store")(session);
 var passport = require("passport");
 var authenticate = require("./authenticate");
-
+var config = require('./config');
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 var dishRouter = require("./routes/dishRouter");
@@ -17,7 +17,7 @@ var leaderRouter = require("./routes/leadersRouter");
 const mongoose = require("mongoose");
 const Dishes = require("./models/dishes");
 
-const url = "mongodb://localhost:27017/conFusion";
+const url = config.mongoUrl;
 const connect = mongoose.connect(url);
 
 connect.then(
@@ -92,4 +92,7 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-module.exports = app;
+module.exports = {
+  'secretKey': '12345-67890-09876-54321',
+  'mongoUrl' : 'mongodb://localhost:27017/conFusion'
+}
